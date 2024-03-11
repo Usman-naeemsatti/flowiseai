@@ -1,4 +1,5 @@
-#EC2
+#EC2-Flowise
+
 resource "aws_instance" "flowise" {
   ami                         = var.ec2_ami
   instance_type               = var.instance_type
@@ -20,6 +21,37 @@ resource "aws_instance" "flowise" {
   depends_on = [
     aws_db_instance.flowise
   ]
+  
+  tags = {
+    Name = "Flowise_Instance"
+  }
+}
+
+#EC2-Langfuse
+
+resource "aws_instance" "langfuse" {
+  ami                         = var.ec2_ami
+  instance_type               = var.instance_type
+  key_name                    = aws_key_pair.kp.key_name
+  subnet_id                   = aws_subnet.public1.id
+  security_groups             = [aws_security_group.allow_ssh.id]
+  associate_public_ip_address = true
+  user_data = templatefile("langfuse-data.sh", {
+
+  PORT       =  var.flow_port,
+  db_host    =  aws_db_instance.flowise.endpoint,
+  db_name    =  var.db_name,
+  db_user    =  var.db_user,
+  db_pass    =  var.db_pass,
+  })
+
+  depends_on = [
+    aws_db_instance.flowise
+  ]
+
+  tags = {
+    Name = "Langfuse_Instance"
+  }
 }
 
 resource "aws_db_instance" "flowise" {
