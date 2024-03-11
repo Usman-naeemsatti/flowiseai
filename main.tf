@@ -6,7 +6,7 @@ resource "aws_instance" "flowise" {
   subnet_id                   = aws_subnet.public1.id
   security_groups             = [aws_security_group.allow_ssh.id]
   associate_public_ip_address = true
-  user_data = templatefile("user-data.sh", {
+  user_data = templatefile("flowise-data.sh", {
     
     PORT                = var.flow_port,
     DATABASE_TYPE       = var.db_type,
