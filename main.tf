@@ -1,5 +1,4 @@
 #EC2-Flowise
-
 resource "aws_instance" "flowise" {
   ami                         = var.ec2_ami
   instance_type               = var.instance_type
