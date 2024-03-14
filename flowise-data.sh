@@ -25,7 +25,7 @@ services:
             - DATABASE_USER=${DATABASE_USER}
             - DATABASE_PASSWORD=${DATABASE_PASSWORD}
         ports:
-            - '${PORT}:${PORT}'
+            - '80:${PORT}'
         volumes:
             - ~/.flowise:/root/.flowise
         command: /bin/sh -c "sleep 3; flowise start"
