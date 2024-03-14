@@ -16,7 +16,7 @@ services:
   langfuse-server:
     image: ghcr.io/langfuse/langfuse:latest
     ports:
-      - "${PORT}:${PORT}"
+      - "80:${PORT}"
     environment:
       - DATABASE_HOST=${db_host}
       - DATABASE_USERNAME=${db_user}
